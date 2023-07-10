@@ -38,7 +38,11 @@
         </div>
     </nav>
 </header>
-<h1>Inicio</h1>
+    
+    <div style="text-align: center;">
+        <h1>Inicio</h1>
+        <img src="~/images/EMAIL.jpeg" alt="Correo electrónico" style="max-width: 400px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    </div>
     @if (TempData["MailSentMessage"] != null)
     {
         <div id="mailSentMessage" class="alert alert-info">

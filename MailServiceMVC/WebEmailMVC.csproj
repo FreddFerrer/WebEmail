@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Mails.Entities\Entidades.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\EMAIL.jpeg" />
+  </ItemGroup>
+
 </Project>

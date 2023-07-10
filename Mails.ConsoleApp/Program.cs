@@ -3,9 +3,9 @@ using Mails.Entities;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
-Console.WriteLine("Enter your email: ");
+Console.WriteLine("Ingrese su email: ");
 var email = Console.ReadLine();
-Console.WriteLine("Enter your password: ");
+Console.WriteLine("Ingrese su contraseña: ");
 var password = Console.ReadLine();
 
 var loginRequest = new LogInRequest()
@@ -20,12 +20,12 @@ using (var client = new HttpClient())
     HttpResponseMessage response = client.PostAsync("https://localhost:5050/api/users/login", content).Result;
     if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Equals("true"))
     {
-        Console.WriteLine("Logged in successfully!");
+        Console.WriteLine("Ingreso exitoso!");
         int key;
         do
         {
             Console.WriteLine("---MENU---");
-            Console.WriteLine("1 - INBOX\n2 - OUTBOX\n0 - LOGOUT");
+            Console.WriteLine("1 - BANDEJA DE ENTRADA\n2 - BANDEJA DE SALIDA\n0 - SALIR");
             key = int.Parse(Console.ReadLine());
             switch (key)
             {
@@ -33,24 +33,24 @@ using (var client = new HttpClient())
                     response = client.GetAsync("https://localhost:5050/api/mails/all/inbox/" + email).Result;
                     data = response.Content.ReadAsStringAsync().Result;
                     var resultList = JsonConvert.DeserializeObject<List<Mail>>(data);
-                    Console.WriteLine("---INBOX---");
+                    Console.WriteLine("---BANDEJA DE ENTRADA---");
                     foreach (var item in resultList)
                     {
-                        Console.WriteLine("---Mail---");
+                        Console.WriteLine("------Mail------");
                         Console.WriteLine(item);
-                        Console.WriteLine("----------");
+                        Console.WriteLine("----------------");
                     }
                     break;
                 case 2:
                     response = client.GetAsync("https://localhost:5050/api/mails/all/outbox/" + email).Result;
                     data = response.Content.ReadAsStringAsync().Result;
                     resultList = JsonConvert.DeserializeObject<List<Mail>>(data);
-                    Console.WriteLine("---OUTBOX---");
+                    Console.WriteLine("---BANDEJA DE SALIDA---");
                     foreach (var item in resultList)
                     {
-                        Console.WriteLine("---Mail---");
+                        Console.WriteLine("-------Mail------");
                         Console.WriteLine(item);
-                        Console.WriteLine("----------");
+                        Console.WriteLine("-----------------");
                     }
                     break;
                 case 0:
@@ -62,7 +62,7 @@ using (var client = new HttpClient())
     }
     else
     {
-        Console.WriteLine("Email or password don't match!");
+        Console.WriteLine("Email o contraseña incorrecta!");
     }
 }
 
