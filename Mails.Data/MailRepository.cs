@@ -41,131 +41,13 @@ namespace Mails.Data
                          select m;
             return result.ToList();
         }
-        //Trae la bandeja de entrada paginada
-        public Response<Mail> GetInboxPaged(Search search)
-        {
-            var skipRows = ((search.PageIndex - 1) * search.PageSize);
-
-            var query = from m in GetOrderedMails()
-                        where m.Receiver.Contains(search.TextToSearch)
-                        select m;
-
-            var count = query.Count();
-
-            var response = new Response<Mail>()
-            {
-                Items = query.Skip(skipRows)
-                             .Take(search.PageSize)
-                             .ToList(),
-
-                Total = count
-            };
-
-            return response;
-        }
-        //Trae la bandeja de salida paginada
-        public Response<Mail> GetOutboxPaged(Search search)
-        {
-            var skipRows = ((search.PageIndex - 1) * search.PageSize);
-
-            var query = from m in GetOrderedMails()
-                        where m.SenderEmail.Contains(search.TextToSearch)
-                        select m;
-
-            var count = query.Count();
-
-            var response = new Response<Mail>()
-            {
-                Items = query.Skip(skipRows)
-                             .Take(search.PageSize)
-                             .ToList(),
-
-                Total = count
-            };
-
-            return response;
-        }
-
+        
         //Crea un nuevo correo y almacena en DB
         public void NewMail (Mail mail)
         {
             _context.Mails.Add(mail);
             _context.SaveChanges();
         }
-
-        //Trae el inbox paginado y filtrado por busqueda de texto ingresado en txtTextToSearch(windform)
-        public Response<Mail> SearchInbox(Search search, string email)
-        {
-            var skipRows = ((search.PageIndex - 1) * search.PageSize);
-            var inBox = GetInbox(email);
-            var query = from m in inBox
-                        where m.Subject.Contains(search.TextToSearch) ||
-                         m.SenderEmail.Contains(search.TextToSearch) ||
-                          m.Body.Contains(search.TextToSearch) ||
-                 m.Receiver.Contains(search.TextToSearch)
-                        select m;
-            var count = query.Count();
-            var response = new Response<Mail>()
-            {
-                Items = query.Skip(skipRows)
-                             .Take(search.PageSize)
-                .ToList(),
-
-                Total = count
-            };
-            return response;
-
-        }
-        //Trae el outbox paginado y filtrado por busqueda de texto ingresado en txtTextToSearch(windform)
-        public Response<Mail> SearchOutbox(Search search, string email)
-        {
-            var skipRows = ((search.PageIndex - 1) * search.PageSize);
-            var outBox = GetOutbox(email);
-            var query = from m in outBox
-                        where m.Subject.Contains(search.TextToSearch) ||
-                         m.SenderEmail.Contains(search.TextToSearch) ||
-                         m.Body.Contains(search.TextToSearch) ||
-                            m.Receiver.Contains(search.TextToSearch)
-                        select m;
-            var count = query.Count();
-            var response = new Response<Mail>()
-            {
-                Items = query.Skip(skipRows)
-                             .Take(search.PageSize)
-                                .ToList(),
-
-                Total = count
-            };
-            return response;
-
-        }
-        //Esto reemplazamos por script en MVC
-        public List<Mail> SearchAllInbox(string textToSearch, string email)
-        {
-            var inBox = GetInbox(email);
-            var query = from m in inBox
-                        where m.Subject.Contains(textToSearch) ||
-                         m.SenderEmail.Contains(textToSearch) ||
-                          m.Body.Contains(textToSearch) ||
-                 m.Receiver.Contains(textToSearch)
-                        select m;
-            
-            return query.ToList();
-
-        }
-        //Esto reemplazamos por script en MVC
-        public List<Mail> SearchAllOutbox(string textToSearch, string email)
-        {
-            var outBox = GetOutbox(email);
-            var query = from m in outBox
-                        where m.Subject.Contains(textToSearch) ||
-                         m.SenderEmail.Contains(textToSearch) ||
-                          m.Body.Contains(textToSearch) ||
-                 m.Receiver.Contains(textToSearch)
-                        select m;
-
-            return query.ToList();
-
-        }
+       
     }
 }

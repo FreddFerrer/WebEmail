@@ -7,7 +7,7 @@ namespace MailServiceMVC.Controllers
     public class MailsController : Controller
     {
         //Variables privadas para ruteo
-        private readonly Uri _baseAddress = new Uri("https://localhost:7007/api");
+        private readonly Uri _baseAddress = new Uri("https://localhost:5050/api");
         private readonly HttpClient _client;
 
         public MailsController()
@@ -62,10 +62,10 @@ namespace MailServiceMVC.Controllers
             HttpResponseMessage response = _client.PostAsync(_client.BaseAddress + "/mails", content).Result;
             if (response.IsSuccessStatusCode)
             {
-                TempData["MailSentMessage"] = "Mail sent!";
+                TempData["MailSentMessage"] = "Email enviado!";
                 return View("MailsMenu");
             }
-            TempData["MailSentMessage"] = "Error sending mail!";
+            TempData["MailSentMessage"] = "Error al enviar el email!";
             return View("MailsMenu"); 
         }
         //vista de detalles del mail

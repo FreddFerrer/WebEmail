@@ -1,9 +1,7 @@
 ﻿@{
     ViewData["Title"] = "SignUp Menu";
 }
-<h1>@ViewData["Title"]</h1>
-
-
+<h1 class="text-center">Crear nuevo usuario</h1>
 
 @if (TempData["ErrorMessage"] != null)
 {
@@ -11,15 +9,24 @@
         @TempData["ErrorMessage"]
     </div>
 }
-<div>
+
+<div class="signup-form">
     <form method="post" asp-controller="User" asp-action="SignUp">
-        <label for="text">Name:</label><br>
-        <input type="text" id="Name" name="Name" required><br>
-        <label for="text">Email:</label><br>
-        <input type="text" id="Email" name="Email" required><br>
-        <label for="text">Password:</label><br>
-        <input type="password" id="Password" name="Password" required><br>
-        <button type="submit">SignUp</button>
+        <div class="form-group">
+            <label for="Name">Nombre:</label>
+            <input type="text" class="form-control" id="Name" name="Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="text" class="form-control" id="Email" name="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Contraseña:</label>
+            <input type="password" class="form-control" id="Password" name="Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Crear usuario</button>
     </form>
-    
 </div>

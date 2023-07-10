@@ -11,7 +11,7 @@ namespace MailServiceMVC.Controllers
     public class UserController : Controller
     {
         //Variables privadas para ruteo
-        private readonly Uri _baseAddress = new Uri("https://localhost:7007/api");
+        private readonly Uri _baseAddress = new Uri("https://localhost:5050/api");
         private readonly HttpClient _client;
 
         public UserController()
@@ -48,7 +48,7 @@ namespace MailServiceMVC.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "ERROR! - Email or Password doesn't match.";
+                TempData["ErrorMessage"] = "Error, usuario o contraseña incorrectos.";
                 return RedirectToAction("LogInMenu", "Home");
             }
             
@@ -71,7 +71,7 @@ namespace MailServiceMVC.Controllers
             //Chequea que el usuario que el usario no este en uso y de estar disponible lo crea
             if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Equals("true"))
             {
-                TempData["SuccessMessage"] = "User created!";
+                TempData["SuccessMessage"] = "Usuario creado";
 
                 
                 return RedirectToAction("LogInMenu", "Home");
@@ -79,7 +79,7 @@ namespace MailServiceMVC.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "ERROR! - Email taken.";
+                TempData["ErrorMessage"] = "El email ya esta en uso";
                 return RedirectToAction("SignUp", "Home");
             }
 

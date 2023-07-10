@@ -29,7 +29,7 @@ namespace Mails.ConsoleApp
                     };
                     string data = JsonConvert.SerializeObject(user);
                     StringContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = client.PostAsync("https://localhost:7007/api/users", content).Result;
+                    HttpResponseMessage response = client.PostAsync("https://localhost:5050/api/users", content).Result;
                     if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Equals("true"))
                     {
                         Console.WriteLine("Added user!");

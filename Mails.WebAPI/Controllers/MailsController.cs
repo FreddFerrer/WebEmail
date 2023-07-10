@@ -17,16 +17,7 @@ namespace Mails.WebAPI.Controllers
             _mailBusiness = mail;
         }
 
-        //[HttpPost("InBox")]
-        //public Response<Mail> GetInBox(Search search) 
-        //{
-        //    return _mailBusiness.GetInbox(search);
-        //}
-        //[HttpPost("OutBox")]
-        //public Response<Mail> GetOutBox(Search search)
-        //{
-        //    return _mailBusiness.GetOutbox(search);
-        //}
+        
         [HttpGet("{id}")]
         public Mail GetById(int id)
         {
@@ -37,16 +28,7 @@ namespace Mails.WebAPI.Controllers
         {
             _mailBusiness.NewMail(mail);
         }
-        [HttpPost("inbox/{email}")]
-        public Response<Mail> SearchInbox(Search search, string email)
-        {
-            return _mailBusiness.SearchInbox(search, email);
-        }
-        [HttpPost("outbox/{email}")]
-        public Response<Mail> SearchOutbox(Search search, string email)
-        {
-            return _mailBusiness.SearchOutbox(search, email);
-        }
+        
         [HttpGet("all/inbox/{email}")]
         public List<Mail> GetInbox(string email)
         {
@@ -57,15 +39,6 @@ namespace Mails.WebAPI.Controllers
         {
             return _mailBusiness.GetOutbox(email);
         }
-        [HttpGet("all/inbox/{email}/{search}")]
-        public List<Mail> SearchAllInbox(string textToSearch, string email)
-        {
-            return _mailBusiness.SearchAllInbox(textToSearch, email);
-        }
-        [HttpGet("all/outbox/{email}/{search}")]
-        public List<Mail> SearchAllOutbox(string textToSearch, string email)
-        {
-            return _mailBusiness.SearchAllOutbox(textToSearch, email);
-        }
+        
     }
 }

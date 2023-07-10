@@ -17,7 +17,7 @@ using (var client = new HttpClient())
 {
     string data = JsonConvert.SerializeObject(loginRequest);
     StringContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
-    HttpResponseMessage response = client.PostAsync("https://localhost:7007/api/users/login", content).Result;
+    HttpResponseMessage response = client.PostAsync("https://localhost:5050/api/users/login", content).Result;
     if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Equals("true"))
     {
         Console.WriteLine("Logged in successfully!");
@@ -30,7 +30,7 @@ using (var client = new HttpClient())
             switch (key)
             {
                 case 1:
-                    response = client.GetAsync("https://localhost:7007/api/mails/all/inbox/" + email).Result;
+                    response = client.GetAsync("https://localhost:5050/api/mails/all/inbox/" + email).Result;
                     data = response.Content.ReadAsStringAsync().Result;
                     var resultList = JsonConvert.DeserializeObject<List<Mail>>(data);
                     Console.WriteLine("---INBOX---");
@@ -42,7 +42,7 @@ using (var client = new HttpClient())
                     }
                     break;
                 case 2:
-                    response = client.GetAsync("https://localhost:7007/api/mails/all/outbox/" + email).Result;
+                    response = client.GetAsync("https://localhost:5050/api/mails/all/outbox/" + email).Result;
                     data = response.Content.ReadAsStringAsync().Result;
                     resultList = JsonConvert.DeserializeObject<List<Mail>>(data);
                     Console.WriteLine("---OUTBOX---");

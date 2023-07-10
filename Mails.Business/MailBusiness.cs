@@ -14,15 +14,7 @@ namespace Mails.Business
             _mailRepository = mailRepository;
         }
 
-        public Response<Mail> GetInbox(Search search)
-        {
-            return _mailRepository.GetInboxPaged(search);
-        }
-
-        public Response<Mail> GetOutbox(Search search)
-        {
-            return _mailRepository.GetOutboxPaged(search);
-        }
+        
         public Mail GetById(int id)
         {
             return _mailRepository.GetById(id);
@@ -31,16 +23,7 @@ namespace Mails.Business
         {
             _mailRepository.NewMail(mail);
         }
-        public Response<Mail> SearchInbox(Search search, string email)
-        {
-            return _mailRepository.SearchInbox(search, email);
-
-        }
-        public Response<Mail> SearchOutbox(Search search, string email)
-        {
-            return _mailRepository.SearchOutbox(search, email);
-
-        }
+        
         public List<Mail> GetInbox(string email)
         {
             return _mailRepository.GetInbox(email);
@@ -49,15 +32,6 @@ namespace Mails.Business
         {
             return _mailRepository.GetOutbox(email);
         }
-        public List<Mail> SearchAllInbox(string textToSearch, string email)
-        {
-            return _mailRepository.SearchAllInbox(textToSearch, email);
-
-        }
-        public List<Mail> SearchAllOutbox(string textToSearch, string email)
-        {
-            return _mailRepository.SearchAllOutbox(textToSearch, email);
-
-        }
+        
     }
 }

@@ -21,7 +21,7 @@ namespace Mails.ConsoleApp
             using (var client = new HttpClient())
             {
                 var random = new Random();
-                HttpResponseMessage response = client.GetAsync("https://localhost:7007/api/users").Result;
+                HttpResponseMessage response = client.GetAsync("https://localhost:5050/api/users").Result;
                 string data = response.Content.ReadAsStringAsync().Result;
                 List<User> users = JsonConvert.DeserializeObject<List<User>>(data);
                 for (int i = 0; i < amount; i++)

@@ -4,12 +4,13 @@
     ViewData["Title"] = "Outbox";
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MailServiceMVC</title>
+    <title>@ViewData["Title"] - WebEmailMVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MailServiceMVC.styles.css" asp-append-version="true" />
@@ -18,97 +19,74 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MailServiceMVC</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebEmailMVC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Inbox">Inbox</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Inbox">Bandeja de entrada</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Outbox">Outbox</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Outbox">Bandeja de salida</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Create">New Mail</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mails" asp-action="Create">Nuevo email</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <h1>@ViewData["Title"]</h1>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <input type="text" id="searchInput">
-    <button onclick="search()">Buscar</button>
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>
-                    @Html.DisplayNameFor(model => model.SenderEmail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Subject)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Body)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null)
-            {
-                @foreach (var item in Model)
+    <div class="container">
+        <h1 class="text-center">Bandeja de salida</h1>
+        <p class="text-center">
+            <a asp-action="Create">Crear nuevo</a>
+        </p>
+        <div class="search-container text-center">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar">
+            <button onclick="search()" class="btn btn-primary">Buscar</button>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Remitente</th>
+                    <th>Asunto</th>
+                    <th>Cuerpo</th>
+                    <th>Destinatario</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr data-searchable="@item.Subject.ToLower() @item.Body.ToLower() @item.SenderEmail.ToLower() @item.Receiver.ToLower()">
+                            <td>@Html.DisplayFor(modelItem => item.SenderEmail)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Body)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Receiver)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                            <td>
+                                @Html.ActionLink("Detalle", "Details", new { id=item.MailId }, new { @class = "btn btn-primary" })
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                    <tr data-searchable="@item.Subject.ToLower() @item.Body.ToLower() @item.SenderEmail.ToLower() @item.Receiver.ToLower()">
-
-
-
-                        <td>
-                                @Html.DisplayFor(modelItem => item.SenderEmail)
-                        </td>
-                        <td>
-                                @Html.DisplayFor(modelItem => item.Subject)
-                        </td>
-                        <td>
-                                @Html.DisplayFor(modelItem => item.Body)
-                        </td>
-                        <td>
-                                @Html.DisplayFor(modelItem => item.Receiver)
-                        </td>
-                        <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                        <td>
-
-                                @Html.ActionLink("Details", "Details", new { id=item.MailId  }) |
-
-                        </td>
-                    </tr>
+                        <td colspan="6" class="text-center">No existen emails en la bandeja de salida.</td>
                     </tr>
                 }
-            } else
-            {
-                <h3>
-                    No existen emails en la bandeja de salida!
-                </h3>
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
     <script>
         function search() {
             var searchTerm = document.getElementById("searchInput").value.toLowerCase();
@@ -125,6 +103,4 @@
         }
     </script>
 </body>
-
-
-
+</html>

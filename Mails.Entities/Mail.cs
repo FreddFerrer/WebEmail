@@ -17,7 +17,7 @@ namespace Mails.Entities
 
         public override string ToString()
         {
-            return $"Sender: {SenderEmail}\nReceiver: {Receiver} \nSubject: {Subject} \nBody: {Body}";
+            return $"Remitente: {SenderEmail}\nDestinatario: {Receiver} \nAsunto: {Subject} \nCuerpo: {Body}";
         }
     }
 }

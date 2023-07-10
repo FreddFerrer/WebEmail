@@ -13,9 +13,7 @@ namespace Mails.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Mail> Mails { get; set; }
 
-        //public MailsContext(DbContextOptions<MailContext> options) : base(options)
-        //{
-        //}
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
