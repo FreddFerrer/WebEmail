@@ -12,9 +12,7 @@ namespace Mails.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Mail> Mails { get; set; }
-
-        
-
+      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string conectionString = "Persist Security Info=True;data source=DESKTOP-3AKF5J3\\MSSQLFREDD;initial catalog=db_WebEmail; Integrated Security=True;TrustServerCertificate=True;";

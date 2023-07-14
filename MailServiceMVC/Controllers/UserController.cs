@@ -42,9 +42,9 @@ namespace MailServiceMVC.Controllers
             if (response.IsSuccessStatusCode && response.Content.ReadAsStringAsync().Result.Equals("true"))
             {
                 HttpContext.Session.SetString("EmailSessionKey", email);
-                //TempData["EmailSessionKey"] = email;
+                
                 return RedirectToAction("MailsMenu", "Mails");
-                //return View("MailsMenu", "MailService");
+                
             }
             else
             {
